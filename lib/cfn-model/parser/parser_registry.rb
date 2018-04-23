@@ -1,4 +1,6 @@
-Dir["#{__dir__}/*_parser.rb"].each { |model| require "cfn-model/parser/#{File.basename(model, '.rb')}" }
+Dir["#{__dir__}/*_parser.rb"].each do |model|
+  require "cfn-model/parser/#{File.basename(model, '.rb')}"
+end
 
 class ParserRegistry
   attr_reader :registry

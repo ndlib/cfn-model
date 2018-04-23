@@ -9,7 +9,9 @@ describe CfnParser, :eni do
 
   context 'a network interface with external sg via Parameter' do
     it 'returns network interface with reference to Parameter' do
-      yaml_test_templates('ec2_network_interface/interface_with_external_sg').each do |test_template|
+      yaml_test_templates(
+        'ec2_network_interface/interface_with_external_sg'
+      ).each do |test_template|
         cfn_model = @cfn_parser.parse IO.read(test_template)
 
         network_interfaces = cfn_model.resources_by_type('AWS::EC2::NetworkInterface')

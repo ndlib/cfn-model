@@ -4,7 +4,8 @@ class LoadBalancerV2Parser
 
     # could be a List<Subnet::Id>
     # if load_balancer.subnets.size < 2
-    #   raise ParserError.new("Load Balancer must have at least two subnets: #{load_balancer.logical_resource_id}")
+    #   raise ParserError.new('Load Balancer must have at least two subnets: ' +
+    #                         load_balancer.logical_resource_id)
     # end
 
     if load_balancer.securityGroups.is_a? Array

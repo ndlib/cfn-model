@@ -3,7 +3,8 @@ class Principal
     if principal.is_a? String
       has_asterisk principal
     elsif principal.is_a? Hash
-      # if new principal types arrive, let's not tie ourselves down - the * is still likely the thing to look for
+      # if new principal types arrive, let's not tie ourselves down -
+      # the * is still likely the thing to look for
       # unless %w(AWS FederatedUser CanonicalUser Service).include?(principal.keys.first)
       #   raise "whacky principal key: #{principal}"
       # end

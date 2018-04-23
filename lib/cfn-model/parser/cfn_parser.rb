@@ -5,7 +5,9 @@ require 'cfn-model/validator/cloudformation_validator'
 require 'cfn-model/validator/reference_validator'
 require_relative 'parser_registry'
 require_relative 'parser_error'
-Dir["#{__dir__}/../model/*.rb"].each { |model| require "cfn-model/model/#{File.basename(model, '.rb')}" }
+Dir["#{__dir__}/../model/*.rb"].each do |model|
+  require "cfn-model/model/#{File.basename(model, '.rb')}"
+end
 
 ##
 # This class is the heart of the matter.  It will take a CloudFormation template
@@ -22,7 +24,8 @@ class CfnParser
     { 'Fn::GetAtt' => val }
   end
 
-  %w[Join Base64 Sub Split Select ImportValue GetAZs FindInMap And Or If Not].each do |function_name|
+  %w[Join Base64 Sub Split Select
+     ImportValue GetAZs FindInMap And Or If Not].each do |function_name|
     YAML.add_domain_type('', function_name) { |_type, val| { "Fn::#{function_name}" => val } }
   end
 
@@ -47,7 +50,8 @@ class CfnParser
     transform_hash_into_model_elements cfn_hash, cfn_model
     transform_hash_into_parameters cfn_hash, cfn_model
 
-    # pass 2: tie together separate resources only where necessary to make life easier for rule logic
+    # pass 2: tie together separate resources only where necessary to make
+    # life easier for rule logic
     post_process_resource_model_elements cfn_model
 
     apply_parameter_values(cfn_model, parameter_values_json)

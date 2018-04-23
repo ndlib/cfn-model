@@ -6,7 +6,8 @@ class IamRoleParser
   def parse(cfn_model:, resource:)
     iam_role = resource
 
-    iam_role.assume_role_policy_document = PolicyDocumentParser.new.parse(iam_role.assumeRolePolicyDocument)
+    iam_role.assume_role_policy_document = \
+      PolicyDocumentParser.new.parse(iam_role.assumeRolePolicyDocument)
 
     iam_role.policy_objects = iam_role.policies.map do |policy|
       next unless policy.key? 'PolicyName'

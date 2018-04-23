@@ -35,7 +35,7 @@ end
 module Custom
 end
 
-# ModelElement is a bit of a misnomer I think.... this is really a Resource, and Parameter and Resource
+# ModelElement is a bit of a misnomer: this is really a Resource, and Parameter and Resource
 # have a lot in common, but are different
 class ModelElement
   attr_accessor :logical_resource_id, :resource_type, :metadata

@@ -8,15 +8,21 @@ class PolicyDocument
   end
 
   def wildcard_allowed_resources
-    @statements.select { |statement| !statement.wildcard_resources.empty? && statement.effect == 'Allow' }
+    @statements.select do |statement|
+      !statement.wildcard_resources.empty? && statement.effect == 'Allow'
+    end
   end
 
   def wildcard_allowed_actions
-    @statements.select { |statement| !statement.wildcard_actions.empty? && statement.effect == 'Allow' }
+    @statements.select do |statement|
+      !statement.wildcard_actions.empty? && statement.effect == 'Allow'
+    end
   end
 
   def wildcard_allowed_principals
-    @statements.select { |statement| statement.wildcard_principal? && statement.effect == 'Allow' }
+    @statements.select do |statement|
+      statement.wildcard_principal? && statement.effect == 'Allow'
+    end
   end
 
   ##
@@ -27,7 +33,9 @@ class PolicyDocument
   end
 
   def allows_not_resource
-    @statements.select { |statement| !statement.not_resources.empty? && statement.effect == 'Allow' }
+    @statements.select do |statement|
+      !statement.not_resources.empty? && statement.effect == 'Allow'
+    end
   end
 
   def allows_not_principal

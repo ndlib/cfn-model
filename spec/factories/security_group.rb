@@ -2,7 +2,9 @@ require 'cfn-model/model/security_group'
 require 'cfn-model/model/security_group_ingress'
 require 'cfn-model/model/cfn_model'
 
-def security_group_with_one_ingress_rule(cfn_model: CfnModel.new, security_group_id: 'sg2', ingress_group_id: nil)
+def security_group_with_one_ingress_rule(cfn_model: CfnModel.new,
+                                         security_group_id: 'sg2',
+                                         ingress_group_id: nil)
   ingress_rule = AWS::EC2::SecurityGroupIngress.new cfn_model
   ingress_rule.cidrIp = '10.1.2.3/32'
   ingress_rule.fromPort = 34
@@ -26,7 +28,9 @@ def security_group_with_one_ingress_rule(cfn_model: CfnModel.new, security_group
   expected_security_group
 end
 
-def security_group_with_one_ingress_rule_ipprotocol(cfn_model: CfnModel.new, security_group_id: 'sg3', ingress_group_id: nil)
+def security_group_with_one_ingress_rule_ipprotocol(cfn_model: CfnModel.new,
+                                                    security_group_id: 'sg3',
+                                                    ingress_group_id: nil)
   ingress_rule = AWS::EC2::SecurityGroupIngress.new cfn_model
   ingress_rule.cidrIp = '10.1.2.3/32'
   ingress_rule.ipProtocol = '-1'
@@ -91,7 +95,9 @@ def security_group_with_two_ingress_rules(cfn_model: CfnModel.new, id: 'sg2')
   expected_security_group
 end
 
-def security_group_with_one_external_egress_rule(cfn_model: CfnModel.new, security_group_id: 'sg1', egress_group_id: nil)
+def security_group_with_one_external_egress_rule(cfn_model: CfnModel.new,
+                                                 security_group_id: 'sg1',
+                                                 egress_group_id: nil)
   egress_rule = AWS::EC2::SecurityGroupEgress.new cfn_model
   egress_rule.cidrIp = '5.5.5.5/32'
   egress_rule.fromPort = 39
@@ -110,7 +116,9 @@ def security_group_with_one_external_egress_rule(cfn_model: CfnModel.new, securi
   expected_security_group
 end
 
-def security_group_with_one_egress_rule(cfn_model: CfnModel.new, security_group_id: 'sg1', egress_group_id: nil)
+def security_group_with_one_egress_rule(cfn_model: CfnModel.new,
+                                        security_group_id: 'sg1',
+                                        egress_group_id: nil)
   raw_egress = {
     'CidrIp' => '5.5.5.5/32',
     'FromPort' => 39,
@@ -175,7 +183,9 @@ def security_group_with_one_ingress_and_one_egress_rule(cfn_model: CfnModel.new,
   expected_security_group
 end
 
-def security_group_with_one_egress_rule_ipprotocol(cfn_model: CfnModel.new, security_group_id: 'sg3', ingress_group_id: nil)
+def security_group_with_one_egress_rule_ipprotocol(cfn_model: CfnModel.new,
+                                                   security_group_id: 'sg3',
+                                                   ingress_group_id: nil)
   egress_rule = AWS::EC2::SecurityGroupEgress.new cfn_model
   egress_rule.cidrIp = '10.1.2.3/32'
   egress_rule.ipProtocol = '-1'

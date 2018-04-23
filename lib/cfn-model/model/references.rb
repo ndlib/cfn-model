@@ -44,7 +44,8 @@ module References
       logical_resource_id_from_get_att group_id['Fn::GetAtt']
     else # !group_id['Fn::ImportValue'].nil?
       # anything else will be string manipulation functions
-      # which again leads us back to a string which must be an external security group known out of band
+      # which again leads us back to a string which must be an external security group
+      # known out of band
       # so don't/can't link it up to a security group
       return nil
     end
