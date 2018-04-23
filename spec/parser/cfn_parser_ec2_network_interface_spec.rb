@@ -20,7 +20,7 @@ describe CfnParser, :eni do
         network_interface = network_interfaces.first
 
         expect(network_interface.groupSet.size).to eq 1
-        expect(network_interface.groupSet.first).to eq ({ 'Ref' => 'CentrallyMaintainedSgId' })
+        expect(network_interface.groupSet.first).to eq('Ref' => 'CentrallyMaintainedSgId')
       end
     end
   end
