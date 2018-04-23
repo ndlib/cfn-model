@@ -4,8 +4,8 @@ class CfnModel
   attr_reader :resources, :parameters
 
   ##
-  # if you really want it, here it is - the raw Hash from YAML.load.  you'll have to mess with structural nits of
-  # CloudFormation and deal with variations between yaml/json refs and all that
+  # if you really want it, here it is - the raw Hash from YAML.load.  you'll have to mess with
+  # structural nits of CloudFormation and deal with variations between yaml/json refs and all that
   #
   attr_accessor :raw_model
 
