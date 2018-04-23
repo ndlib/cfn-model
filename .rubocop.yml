@@ -8,3 +8,5 @@ Layout/IndentHeredoc:
 # A bit longer than default
 Metrics/LineLength:
   Max: 100
+Metrics/MethodLength:
+  Max: 13
