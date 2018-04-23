@@ -18,7 +18,7 @@ describe CfnParser do
             expect(parse_error.errors.size).to eq(1)
             expect(parse_error.errors[0].to_s).to eq("[/Resources/RootRole/Properties] key 'AssumeRolePolicyDocument:' is required.")
           rescue RSpec::Expectations::ExpectationNotMetError
-            $!.message << "in file: #{test_template}"
+            $ERROR_INFO.message << "in file: #{test_template}"
             raise
           end
         end

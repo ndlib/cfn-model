@@ -8,7 +8,6 @@ describe SchemaGenerator do
 
   context 'cfn template with iam user' do
     it 'returns a Hash that can be used as a kwalify schema' do
-
       actual_schema_hash = @schema_generator.generate(IO.read('spec/test_templates/yaml/iam_user/iam_user_with_no_group.yml'))
 
       expected_iam_user_schema_hash = {

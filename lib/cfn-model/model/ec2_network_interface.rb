@@ -1,6 +1,6 @@
 require_relative 'model_element'
 
-class AWS::EC2::NetworkInterface  < ModelElement
+class AWS::EC2::NetworkInterface < ModelElement
   # SecurityGroup objects based upon groupSet
   attr_accessor :security_groups
 

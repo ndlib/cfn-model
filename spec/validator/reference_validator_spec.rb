@@ -4,8 +4,8 @@ require 'cfn-model/parser/parser_error'
 
 describe ReferenceValidator, :refv do
   before(:each) do
-    YAML.add_domain_type('', 'GetAtt') { |type, val| { 'Fn::GetAtt' => val } }
-    YAML.add_domain_type('', 'Ref') { |type, val| { 'Ref' => val } }
+    YAML.add_domain_type('', 'GetAtt') { |_type, val| { 'Fn::GetAtt' => val } }
+    YAML.add_domain_type('', 'Ref') { |_type, val| { 'Ref' => val } }
     @reference_validator = ReferenceValidator.new
   end
 
@@ -23,8 +23,8 @@ Resources:
       JimBob: !Ref someResource
 END
 
-      unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino))
+      unresolved_references = ReferenceValidator.new.unresolved_references YAML.safe_load(cfn_yaml_with_missing_ref)
+      expect(unresolved_references).to eq Set.new(%w[dino])
     end
   end
 
@@ -42,14 +42,14 @@ Resources:
       Fred: wilma
   someResource2:
     Properties:
-      Barney: 
+      Barney:
         Genus: foo
         Species: !Ref dino
       JimBob: !Ref someResource
 END
 
-      unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino))
+      unresolved_references = ReferenceValidator.new.unresolved_references YAML.safe_load(cfn_yaml_with_missing_ref)
+      expect(unresolved_references).to eq Set.new(%w[dino])
     end
   end
 
@@ -71,9 +71,9 @@ Resources:
             - Fred
 END
 
-      expect {
-        _ = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      }.to raise_error(ParserError, 'Ref target must be string literal: {"Ref"=>{"Fn::GetAtt"=>["someResource", "Fred"]}}')
+      expect do
+        _ = ReferenceValidator.new.unresolved_references YAML.safe_load(cfn_yaml_with_missing_ref)
+      end.to raise_error(ParserError, 'Ref target must be string literal: {"Ref"=>{"Fn::GetAtt"=>["someResource", "Fred"]}}')
     end
   end
 
@@ -90,7 +90,7 @@ Resources:
       Barney: !Ref AWS::Region
 END
 
-      unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
+      unresolved_references = ReferenceValidator.new.unresolved_references YAML.safe_load(cfn_yaml_with_missing_ref)
       expect(unresolved_references).to eq Set.new([])
     end
   end
@@ -109,17 +109,16 @@ Resources:
       Fred: wilma
   someResource2:
     Properties:
-      Barney: 
+      Barney:
         Genus: foo
         Species: !GetAtt dino2.Species
       JimBob: !Ref someResource
 END
 
-      unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino2))
+      unresolved_references = ReferenceValidator.new.unresolved_references YAML.safe_load(cfn_yaml_with_missing_ref)
+      expect(unresolved_references).to eq Set.new(%w[dino2])
     end
   end
-
 
   context 'missing Fn::GetATt target to dino2 down in second level - array' do
     it 'returns set of missing ref target dino2' do
@@ -135,17 +134,17 @@ Resources:
       Fred: wilma
   someResource2:
     Properties:
-      Barney: 
+      Barney:
         Genus: foo
-        Species: 
+        Species:
           Fn::GetAtt:
             - dino2
             - Species
       JimBob: !Ref someResource
 END
 
-      unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino2))
+      unresolved_references = ReferenceValidator.new.unresolved_references YAML.safe_load(cfn_yaml_with_missing_ref)
+      expect(unresolved_references).to eq Set.new(%w[dino2])
     end
   end
 end

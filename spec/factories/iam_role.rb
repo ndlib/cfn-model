@@ -29,8 +29,8 @@ def iam_role_with_single_statement(cfn_model: CfnModel.new)
   role = AWS::IAM::Role.new cfn_model
   role.path = '/'
   role.assumeRolePolicyDocument = {
-    'Version'=> '2012-10-17',
-    'Statement'=> {
+    'Version' => '2012-10-17',
+    'Statement' => {
       'Effect' => 'Allow',
       'Principal' => {
         'Service' => ['ec2.amazonaws.com'],

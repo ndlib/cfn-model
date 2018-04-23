@@ -19,7 +19,7 @@ describe CfnParser do
             expect(parse_error.errors[0].to_s).to eq("[/Resources/policy/Properties] key 'PolicyDocument:' is required.")
             expect(parse_error.errors[1].to_s).to eq("[/Resources/policy/Properties] key 'PolicyName:' is required.")
           rescue RSpec::Expectations::ExpectationNotMetError
-            $!.message << "in file: #{test_template}"
+            $ERROR_INFO.message << "in file: #{test_template}"
             raise
           end
         end

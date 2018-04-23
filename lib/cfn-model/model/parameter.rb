@@ -1,11 +1,11 @@
-#copy-paste alert with ModelElement which should instead be Resource anyway
+# copy-paste alert with ModelElement which should instead be Resource anyway
 class Parameter
   attr_accessor :id, :type
 
   attr_accessor :synthesized_value
 
   def is_no_echo?
-    !@noEcho.nil? && @noEcho.to_s.downcase == 'true'
+    !@noEcho.nil? && @noEcho.to_s.casecmp('true').zero?
   end
 
   def to_s
@@ -23,7 +23,7 @@ END
   # to map to instance variables without having to anticipate them in a schema
   def method_missing(method_name, *args)
     if method_name =~ /^(\w+)=$/
-      instance_variable_set "@#{$1}", args[0]
+      instance_variable_set "@#{Regexp.last_match(1)}", args[0]
     else
       instance_variable_get "@#{method_name}"
     end
@@ -31,7 +31,7 @@ END
 
   def emit_instance_vars
     instance_vars_str = ''
-    self.instance_variables.each do |instance_variable|
+    instance_variables.each do |instance_variable|
       instance_vars_str += "  #{instance_variable}=#{instance_variable_get(instance_variable)}\n"
     end
     instance_vars_str

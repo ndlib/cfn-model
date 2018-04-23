@@ -1,7 +1,7 @@
 class LambdaPrincipal
   def self.wildcard?(principal)
     if principal.is_a? String
-      return has_asterisk principal
+      has_asterisk principal
     else
       false
     end
