@@ -120,7 +120,6 @@ END
     end
   end
 
-
   context 'missing Fn::GetATt target to dino2 down in second level - array' do
     it 'returns set of missing ref target dino2' do
       cfn_yaml_with_missing_ref = <<END

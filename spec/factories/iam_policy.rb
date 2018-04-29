@@ -11,7 +11,6 @@ def valid_iam_policy(cfn_model: CfnModel.new)
   policy_document.version = '2012-10-17'
   policy_document.statements << statement
 
-
   role = AWS::IAM::Policy.new cfn_model
   role.policyName = 'wilma'
   role.policyDocument = {
@@ -26,4 +25,3 @@ def valid_iam_policy(cfn_model: CfnModel.new)
   role.groups = %w[fredGroup]
   role
 end
-

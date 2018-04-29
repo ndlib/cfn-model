@@ -20,7 +20,7 @@ def iam_user_with_two_groups_and_two_additions(cfn_model: CfnModel.new)
     iam_user.groups << group_name
   end
 
-  ['groupA', 'groupB', {'Ref' => 'group1'}, 'groupC'].each do |group_name|
+  ['groupA', 'groupB', { 'Ref' => 'group1' }, 'groupC'].each do |group_name|
     iam_user.group_names << group_name
   end
 

@@ -24,7 +24,7 @@ describe LambdaPrincipal, :prin do
 
     context 'not a String or Integer' do
       it 'returns false' do
-        aws_account_id = {'Fn::Join' => []}
+        aws_account_id = { 'Fn::Join' => [] }
         expect(LambdaPrincipal.wildcard?(aws_account_id)).to eq false
       end
     end

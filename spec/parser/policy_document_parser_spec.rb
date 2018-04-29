@@ -62,10 +62,10 @@ describe PolicyDocumentParser do
       expect(policy_document.statements[1].not_actions).to eq %w[sts:moo s3:yowzer]
       expect(policy_document.statements[1].not_resources).to eq %w[arn:foo]
       expect(policy_document.statements[1].condition).to eq({
-        'DateGreaterThan' => {
-          'aws:CurrentTime' => '2013-12-15T12:00:00Z'
-        }
-      })
+                                                              'DateGreaterThan' => {
+                                                                'aws:CurrentTime' => '2013-12-15T12:00:00Z'
+                                                              }
+                                                            })
       expect(policy_document.statements[1].effect).to eq 'Deny'
     end
   end

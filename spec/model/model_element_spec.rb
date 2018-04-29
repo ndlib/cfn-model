@@ -9,7 +9,6 @@ class SomeResource < ModelElement
 
 end
 
-
 describe ModelElement do
   context 'an untouched object without any instance variables' do
     it 'assigns an instance variable' do

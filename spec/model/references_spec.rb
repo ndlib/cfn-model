@@ -145,7 +145,7 @@ describe References do
       it 'returns hash as-is' do
         cfn_model = CfnModel.new
         ref_hash = {
-          'Ref' => {'something_weird':'verboten'}
+          'Ref' => { 'something_weird':'verboten' }
         }
         actual_value = References.resolve_value(cfn_model, ref_hash)
         expected_value = ref_hash

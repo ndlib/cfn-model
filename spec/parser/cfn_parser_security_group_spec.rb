@@ -75,7 +75,7 @@ describe CfnParser do
   context 'a security group with one ingress with -1 IP protocol' do
     it 'returns a size-1 collection of SecurityGroup object with size-1 collection of ingress rules' do
       expected_security_groups = [
-          security_group_with_one_ingress_rule_ipprotocol
+        security_group_with_one_ingress_rule_ipprotocol
       ]
 
       test_templates('security_group/valid_security_group_with_single_ingress_ip_protocol').each do |test_template|
@@ -86,11 +86,10 @@ describe CfnParser do
     end
   end
 
-
   context 'a stand alone ingress with -1 IP Protocol' do
     it 'returns a size-1 collection of SecurityGroupIngress rules' do
       expected_security_groups = [
-          standalone_ingress_rule_ip_protocol
+        standalone_ingress_rule_ip_protocol
       ]
 
       test_templates('security_group/valid_standalone_ingress_ipprotocol').each do |test_template|
@@ -117,7 +116,6 @@ describe CfnParser do
       end
     end
   end
-
 
   context 'a security group and an ingress with a GroupId that is an ImportedValue' do
     it 'returns a size-1 collection of SecurityGroup object with size-0 collection of rules' do
@@ -152,8 +150,8 @@ describe CfnParser do
     it 'returns a size-1 collection of SecurityGroup object with size-2 collection of ingress rules' do
       expected_security_groups = [
         security_group_with_two_ingress_rules(id: 'sg3') do |_, ingress_rule1, ingress_rule2|
-          ingress_rule1.groupId = {'Fn::GetAtt' => %w[sg3 GroupId]}
-          ingress_rule2.groupId = {'Fn::GetAtt' => %w[sg3 GroupId]}
+          ingress_rule1.groupId = { 'Fn::GetAtt' => %w[sg3 GroupId] }
+          ingress_rule2.groupId = { 'Fn::GetAtt' => %w[sg3 GroupId] }
         end
       ]
 
@@ -190,7 +188,7 @@ describe CfnParser do
   context 'a security group with one inline and one externalized egress - using Ref(GroupId)', :egress do
     it 'returns a size-2 collection of SecurityGroup object with size-1 collection of egress rules' do
       expected_security_groups = [
-        security_group_with_one_external_egress_rule(security_group_id: 'sg1', egress_group_id: {'Ref' => 'sg1'}) do |sg, _|
+        security_group_with_one_external_egress_rule(security_group_id: 'sg1', egress_group_id: { 'Ref' => 'sg1' }) do |sg, _|
           sg.tags = [
             {
               'Key' => 'Vintage',
@@ -258,7 +256,7 @@ describe CfnParser do
   context 'a security group with one egress with -1 IP protocol' do
     it 'returns a size-1 collection of SecurityGroup object with size-1 collection of egress rules' do
       expected_security_groups = [
-          security_group_with_one_egress_rule_ipprotocol
+        security_group_with_one_egress_rule_ipprotocol
       ]
 
       yaml_test_templates('security_group/valid_security_group_with_single_egress_ip_protocol').each do |test_template|
@@ -269,11 +267,10 @@ describe CfnParser do
     end
   end
 
-
   context 'a stand alone egress with -1 IP Protocol' do
     it 'returns a size-1 collection of SecurityGroupEgress rules' do
       expected_security_groups = [
-          standalone_egress_rule_ip_protocol
+        standalone_egress_rule_ip_protocol
       ]
 
       yaml_test_templates('security_group/valid_standalone_egress_ipprotocol').each do |test_template|
@@ -289,7 +286,6 @@ describe CfnParser do
       yaml_test_templates('security_group/security_group_with_parameterized_egress').each do |test_template|
         cfn_model = @cfn_parser.parse IO.read(test_template),
                                       IO.read('spec/test_templates/yaml/security_group/egress.json')
-
 
         puts cfn_model.resources['sg2'].egresses
         expect(cfn_model.resources['sg2'].egresses.first.cidrIp).to eq '1.2.3.4/24'
