@@ -16,7 +16,7 @@ class IamRoleParser
       new_policy.policy_name = policy['PolicyName']
       new_policy.policy_document = PolicyDocumentParser.new.parse(policy['PolicyDocument'])
       new_policy
-    end.reject { |policy| policy.nil? }
+    end.reject(&:nil?)
 
     iam_role
   end

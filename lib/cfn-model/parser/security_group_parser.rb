@@ -41,7 +41,7 @@ class SecurityGroupParser
       end
       # ingress_object.valid?
       mapped_at_least_one_attribute ? ingress_object : nil
-    end.reject { |ingress| ingress.nil? }
+    end.reject(&:nil?)
   end
 
   def objectify_egress(cfn_model, security_group)
@@ -59,7 +59,7 @@ class SecurityGroupParser
           egress_object.send("#{initialLower(k)}=", v)
           mapped_at_least_one_attribute = true
         end
-      end.reject { |ingress| ingress.nil? }
+      end.reject { |ingress| ingress.nil? } # rubocop:disable Style/SymbolProc
       # egress_object.valid?
       egress_object
       mapped_at_least_one_attribute ? egress_object : nil
