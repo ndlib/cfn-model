@@ -47,6 +47,10 @@ class CfnModel
 
         cfn_hash['Resources']['FunctionNameRole'] = function_name_role
       end
+      # rubucop:enable Metrics/AbcSize
+      # rubucop:enable Metrics/MethodLength
+
+      # rubucop:disable Metrics/MethodLength
 
       # Return the hash structure of the 'FunctionNameRole'
       # AWS::IAM::Role resource as created by Serverless transform
@@ -70,6 +74,7 @@ class CfnModel
           }
         }
       end
+      # rubucop:enable Metrics/MethodLength
 
       # Return the hash structure of a AWS::Lambda::Function as created
       # by Serverless transform
