@@ -24,12 +24,12 @@ describe CfnParser, :elb do
         cfn_model = @cfn_parser.parse IO.read(test_template)
 
         expect(cfn_model.resources_by_type('AWS::ElasticLoadBalancing::LoadBalancer').first.appCookieStickinessPolicy).to eq(
-                                                                                                                               'Fn::If' => [
-                                                                                                                                 'EnableAppCookie',
-                                                                                                                                 [{ 'PolicyName' => 'AppStickiness', 'CookieName' => 'unclefreddie' }],
-                                                                                                                                 { 'Ref' => 'AWS::NoValue' }
-                                                                                                                               ]
-                                                                                                                             )
+          'Fn::If' => [
+            'EnableAppCookie',
+            [{ 'PolicyName' => 'AppStickiness', 'CookieName' => 'unclefreddie' }],
+            { 'Ref' => 'AWS::NoValue' }
+          ]
+        )
       end
     end
   end

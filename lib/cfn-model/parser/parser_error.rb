@@ -8,6 +8,6 @@ class ParserError < RuntimeError
   end
 
   def to_s
-    "#{@message}#{@errors.nil? ? '' : ':'}#{@errors.to_s}"
+    "#{@message}#{@errors.nil? ? '' : ':'}#{@errors}"
   end
 end

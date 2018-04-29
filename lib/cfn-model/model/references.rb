@@ -8,10 +8,10 @@
 module References
   def self.resolve_value(cfn_model, value)
     if value.is_a? Hash
-      if value.has_key?('Ref')
+      if value.key?('Ref')
         ref_id = value['Ref']
         if ref_id.is_a? String
-          if cfn_model.parameters.has_key?(ref_id)
+          if cfn_model.parameters.key?(ref_id)
             return value if cfn_model.parameters[ref_id].synthesized_value.nil?
             return cfn_model.parameters[ref_id].synthesized_value
           else
@@ -21,10 +21,10 @@ module References
           return value
         end
       else
-        return value
+        value
       end
     else
-      return value
+      value
     end
   end
 
@@ -56,19 +56,19 @@ module References
   def self.logical_resource_id_from_get_att(attribute_spec)
     if attribute_spec.is_a? Array
       if attribute_spec[1] == 'GroupId'
-        return attribute_spec.first
+        attribute_spec.first
       else
         # this could be a reference to a nested stack output so treat it as external
         # and presume the ingress is freestanding.
-        return nil
+        nil
       end
     elsif attribute_spec.is_a? String
       if attribute_spec.split('.')[1] == 'GroupId'
-        return attribute_spec.split('.').first
+        attribute_spec.split('.').first
       else
         # this could be a reference to a nested stack output so treat it as external
         # and presume the ingress is freestanding.
-        return nil
+        nil
       end
     end
   end

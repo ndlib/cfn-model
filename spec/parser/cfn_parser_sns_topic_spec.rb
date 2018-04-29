@@ -12,8 +12,8 @@ describe CfnParser do
         cfn_model = @cfn_parser.parse IO.read(test_template)
 
         expect(cfn_model.resources_by_type('AWS::SNS::Topic').first.topicName).to eq(
-                                                                                       'Fn::If' => %w[cond1 bif zane]
-                                                                                     )
+          'Fn::If' => %w[cond1 bif zane]
+        )
       end
     end
   end

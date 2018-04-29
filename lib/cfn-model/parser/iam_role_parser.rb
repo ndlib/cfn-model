@@ -10,7 +10,7 @@ class IamRoleParser
       PolicyDocumentParser.new.parse(iam_role.assumeRolePolicyDocument)
 
     iam_role.policy_objects = iam_role.policies.map do |policy|
-      next unless policy.has_key? 'PolicyName'
+      next unless policy.key? 'PolicyName'
 
       new_policy = Policy.new
       new_policy.policy_name = policy['PolicyName']

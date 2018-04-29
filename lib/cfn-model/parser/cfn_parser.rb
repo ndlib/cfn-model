@@ -19,9 +19,7 @@ class CfnParser
   YAML.add_domain_type('', 'Ref') { |_type, val| { 'Ref' => val } }
 
   YAML.add_domain_type('', 'GetAtt') do |_type, val|
-    if val.is_a? String
-      val = val.split('.')
-    end
+    val = val.split('.') if val.is_a? String
 
     { 'Fn::GetAtt' => val }
   end
@@ -66,9 +64,9 @@ class CfnParser
     unless parameter_values_json.nil?
       parameter_values = JSON.load parameter_values_json
       return unless parameter_values.is_a? Hash
-      return unless parameter_values.has_key? 'Parameters'
+      return unless parameter_values.key? 'Parameters'
       parameter_values['Parameters'].each do |parameter_name, parameter_value|
-        if cfn_model.parameters.has_key?(parameter_name)
+        if cfn_model.parameters.key?(parameter_name)
           cfn_model.parameters[parameter_name].synthesized_value = parameter_value.to_s
         end
       end
@@ -115,7 +113,7 @@ class CfnParser
   end
 
   def transform_hash_into_parameters(cfn_hash, cfn_model)
-    return cfn_model unless cfn_hash.has_key?('Parameters')
+    return cfn_model unless cfn_hash.key?('Parameters')
 
     cfn_hash['Parameters'].each do |parameter_name, parameter_hash|
       parameter = Parameter.new
@@ -142,7 +140,7 @@ class CfnParser
   def validate_references(cfn_hash)
     unresolved_refs = ReferenceValidator.new.unresolved_references(cfn_hash)
     unless unresolved_refs.empty?
-      raise ParserError.new("Unresolved logical resource ids: #{unresolved_refs.to_a}")
+      raise ParserError, "Unresolved logical resource ids: #{unresolved_refs.to_a}"
     end
   end
 
@@ -165,7 +163,7 @@ class CfnParser
   end
 
   def map_property_name_to_attribute(str)
-    (str.slice(0).downcase + str[1..(str.length)]).gsub /-/, '_'
+    (str.slice(0).downcase + str[1..(str.length)]).tr '-', '_'
   end
 
   def generate_resource_class_from_type(type_name)

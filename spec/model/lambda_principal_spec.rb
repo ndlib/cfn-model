@@ -17,7 +17,7 @@ describe LambdaPrincipal, :prin do
 
     context 'integer account id' do
       it 'returns true' do
-        aws_account_id = 1234234525
+        aws_account_id = 1_234_234_525
         expect(LambdaPrincipal.wildcard?(aws_account_id)).to eq false
       end
     end

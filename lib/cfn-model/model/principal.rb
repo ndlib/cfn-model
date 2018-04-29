@@ -1,7 +1,7 @@
 class Principal
   def self.wildcard?(principal)
     if principal.is_a? String
-      return has_asterisk principal
+      has_asterisk principal
     elsif principal.is_a? Hash
       # if new principal types arrive, let's not tie ourselves down -
       # the * is still likely the thing to look for

@@ -19,10 +19,8 @@ class SecurityGroupParser
   private
 
   def silently_fail
-    begin
-      yield
-    rescue
-    end
+    yield
+  rescue StandardError
   end
 
   def objectify_ingress(cfn_model, security_group)
@@ -54,7 +52,7 @@ class SecurityGroupParser
 
       egress_object = AWS::EC2::SecurityGroupEgress.new cfn_model
       egress.each do |k, v|
-        next if k.match /::/
+        next if k =~ /::/
         silently_fail do
           egress_object.send("#{initialLower(k)}=", v)
           mapped_at_least_one_attribute = true

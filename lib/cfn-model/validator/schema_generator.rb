@@ -62,9 +62,7 @@ class SchemaGenerator
 
     cloudformation_hash['Resources'].each do |resource_id, resource|
       schema_hash = schema_for_type(resource['Type'])
-      unless schema_hash.nil?
-        resources_schema[resource_id] = schema_hash
-      end
+      resources_schema[resource_id] = schema_hash unless schema_hash.nil?
     end
     resources_schema
   end
