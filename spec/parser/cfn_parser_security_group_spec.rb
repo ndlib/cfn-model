@@ -296,5 +296,5 @@ describe CfnParser do
         expect(cfn_model.resources['sg1'].egresses.first.cidrIp).to eq '0.0.0.0/0'
       end
     end
-  end 
+  end
 end#

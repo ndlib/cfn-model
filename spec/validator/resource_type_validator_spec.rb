@@ -18,7 +18,7 @@ describe ResourceTypeValidator do
     it 'raises an error' do
       expect {
         ResourceTypeValidator.validate <<END
----      
+---
 Fred:
   wilma: 5
 END
@@ -43,7 +43,7 @@ END
     it 'raises an error' do
       expect {
         ResourceTypeValidator.validate <<END
----      
+---
 Resources: {}
 END
       }.to raise_error 'Illegal cfn - no Resources'
@@ -54,7 +54,7 @@ END
     it 'raises an error' do
       expect {
         ResourceTypeValidator.validate <<END
----      
+---
 Resources:
   someResource:
     Properties:
@@ -68,7 +68,7 @@ END
     it 'raises an error' do
       expect {
         ResourceTypeValidator.validate <<END
----      
+---
 Parameters:
   someParameter:
     Properties:
@@ -87,7 +87,7 @@ END
   context 'all resources and parameters have types' do
     it 'returns the Hash of the parsed document' do
       actual_hash = ResourceTypeValidator.validate <<END
----      
+---
 Parameters:
   someParameter:
     Type: String

@@ -122,7 +122,7 @@ END
     it 'returns model with parameter values resolved' do
 
       parameters_json = <<END
-{      
+{
   "Parameters": {
     "SubnetId": "subnet-1234",
     "SgIds": "sg-1234, sg-4566",

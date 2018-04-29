@@ -42,7 +42,7 @@ Resources:
       Fred: wilma
   someResource2:
     Properties:
-      Barney: 
+      Barney:
         Genus: foo
         Species: !Ref dino
       JimBob: !Ref someResource
@@ -109,7 +109,7 @@ Resources:
       Fred: wilma
   someResource2:
     Properties:
-      Barney: 
+      Barney:
         Genus: foo
         Species: !GetAtt dino2.Species
       JimBob: !Ref someResource
@@ -135,9 +135,9 @@ Resources:
       Fred: wilma
   someResource2:
     Properties:
-      Barney: 
+      Barney:
         Genus: foo
-        Species: 
+        Species:
           Fn::GetAtt:
             - dino2
             - Species
