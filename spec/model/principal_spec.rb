@@ -66,9 +66,9 @@ describe Principal, :prin do
 
     context 'not a String or Hash' do
       it 'raises an error' do
-        expect{
+        expect do
           _ = Principal.wildcard?(['*'])
-        }.to raise_error 'whacky principal not string or hash: ["*"]'
+        end.to raise_error 'whacky principal not string or hash: ["*"]'
       end
     end
   end

@@ -71,9 +71,9 @@ Resources:
             - Fred
 END
 
-      expect {
+      expect do
         _ = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      }.to raise_error(ParserError, 'Ref target must be string literal: {"Ref"=>{"Fn::GetAtt"=>["someResource", "Fred"]}}')
+      end.to raise_error(ParserError, 'Ref target must be string literal: {"Ref"=>{"Fn::GetAtt"=>["someResource", "Fred"]}}')
     end
   end
 

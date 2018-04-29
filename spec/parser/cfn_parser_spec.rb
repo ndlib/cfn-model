@@ -9,38 +9,38 @@ describe CfnParser do
   context 'a yml template' do
     context 'an empty template' do
       it 'returns a parse error' do
-        expect {
+        expect do
           @cfn_parser.parse('')
-        }.to raise_error 'yml empty'
+        end.to raise_error 'yml empty'
 
-        expect {
+        expect do
           @cfn_parser.parse('---')
-        }.to raise_error 'yml empty'
+        end.to raise_error 'yml empty'
       end
     end
 
     context 'a template with missing Resources' do
       it 'returns a parse error' do
 
-        expect {
+        expect do
           @cfn_parser.parse <<END
 ---
 Parameters: {}
 END
-        }.to raise_error 'Illegal cfn - no Resources'
+        end.to raise_error 'Illegal cfn - no Resources'
 
       end
     end
 
     context 'a template with empty Resources' do
       it 'returns a parse error' do
-        expect {
+        expect do
           @cfn_parser.parse <<END
 ---
 Parameters: {}
 Resources: {}
 END
-        }.to raise_error 'Illegal cfn - no Resources'
+        end.to raise_error 'Illegal cfn - no Resources'
       end
     end
   end
@@ -48,26 +48,26 @@ END
   context 'a json template' do
     context 'an empty template' do
       it 'returns a parse error' do
-        expect {
+        expect do
           @cfn_parser.parse('')
-        }.to raise_error 'yml empty'
+        end.to raise_error 'yml empty'
 
-        expect {
+        expect do
           @cfn_parser.parse('{}')
-        }.to raise_error 'Illegal cfn - no Resources'
+        end.to raise_error 'Illegal cfn - no Resources'
       end
     end
 
     context 'a template with missing Resources' do
       it 'returns a parse error' do
 
-        expect {
+        expect do
           @cfn_parser.parse <<END
 {
   "Parameters": {}
 }
 END
-        }.to raise_error 'Illegal cfn - no Resources'
+        end.to raise_error 'Illegal cfn - no Resources'
 
       end
     end
@@ -94,14 +94,14 @@ END
 
     context 'a template with empty Resources' do
       it 'returns a parse error' do
-        expect {
+        expect do
           @cfn_parser.parse <<END
 {
 "Parameters": {},
 "Resources": {}
 }
 END
-        }.to raise_error 'Illegal cfn - no Resources'
+        end.to raise_error 'Illegal cfn - no Resources'
       end
     end
   end

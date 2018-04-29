@@ -170,9 +170,9 @@ describe CfnParser do
   context 'a security group with one externalized ingress with a bad Ref for GroupId' do
     it 'returns a ParserError' do
       test_templates('security_group/security_group_with_invalid_standalone_ingress').each do |test_template|
-        expect {
+        expect do
           _ = @cfn_parser.parse IO.read(test_template)
-        }.to raise_error(ParserError, 'Unresolved logical resource ids: ["cantfindthis"]')
+        end.to raise_error(ParserError, 'Unresolved logical resource ids: ["cantfindthis"]')
       end
     end
   end
@@ -180,9 +180,9 @@ describe CfnParser do
   context 'a security group with one externalized ingress with a bad Ref for GroupId' do
     it 'returns a ParserError' do
       test_templates('security_group/security_group_with_invalid_standalone_getatt').each do |test_template|
-        expect {
+        expect do
           _ = @cfn_parser.parse IO.read(test_template)
-        }.to raise_error(ParserError, 'Unresolved logical resource ids: ["reallycantfindit"]')
+        end.to raise_error(ParserError, 'Unresolved logical resource ids: ["reallycantfindit"]')
       end
     end
   end
@@ -221,9 +221,9 @@ describe CfnParser do
   context 'a security group with one externalized egress with a bad Ref for GroupId' do
     it 'returns a ParserError' do
       test_templates('security_group/security_group_with_invalid_standalone_egress').each do |test_template|
-        expect {
+        expect do
           _ = @cfn_parser.parse IO.read(test_template)
-        }.to raise_error(ParserError, 'Unresolved logical resource ids: ["cantfindthis"]')
+        end.to raise_error(ParserError, 'Unresolved logical resource ids: ["cantfindthis"]')
       end
     end
   end
