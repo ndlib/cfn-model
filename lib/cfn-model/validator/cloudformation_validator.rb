@@ -7,6 +7,6 @@ class CloudFormationValidator
 
     validator = Kwalify::Validator.new(schema)
 
-    validator.validate(YAML.load(cloudformation_string))
+    validator.validate(YAML.safe_load(cloudformation_string))
   end
 end

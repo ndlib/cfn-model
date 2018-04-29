@@ -36,7 +36,7 @@ class CfnParser
   def parse(cloudformation_yml, parameter_values_json=nil)
     pre_validate_model cloudformation_yml
 
-    cfn_hash = YAML.load cloudformation_yml
+    cfn_hash = YAML.safe_load cloudformation_yml
 
     # Transform raw resources in template as performed by
     # transforms
