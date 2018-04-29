@@ -21,7 +21,7 @@ class CfnModel
   # the Hash is a clone
   def copy
     new_cfn_model = CfnModel.new
-    @parameters.each do |k,v|
+    @parameters.each do |k, v|
       new_cfn_model.parameters[k] = v
     end
     @resources.each do |k, v|

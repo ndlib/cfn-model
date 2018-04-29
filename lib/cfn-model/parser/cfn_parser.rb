@@ -33,7 +33,7 @@ class CfnParser
   ##
   # Given raw json/yml CloudFormation template, returns a CfnModel object
   # or raise ParserErrors if something is amiss with the format
-  def parse(cloudformation_yml, parameter_values_json=nil)
+  def parse(cloudformation_yml, parameter_values_json = nil)
     pre_validate_model cloudformation_yml
 
     cfn_hash = YAML.safe_load cloudformation_yml

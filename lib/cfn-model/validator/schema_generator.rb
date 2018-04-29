@@ -10,7 +10,6 @@ require 'yaml'
 # files per resource type
 class SchemaGenerator
   def generate(cloudformation_yml)
-
     # make sure structure of Resources is decent and that every record has a Type at least
     cloudformation_hash = ResourceTypeValidator.validate cloudformation_yml
 
