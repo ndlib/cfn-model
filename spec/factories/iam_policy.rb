@@ -14,8 +14,8 @@ def valid_iam_policy(cfn_model: CfnModel.new)
   role = AWS::IAM::Policy.new cfn_model
   role.policyName = 'wilma'
   role.policyDocument = {
-    'Version'=> '2012-10-17',
-    'Statement'=> {
+    'Version' => '2012-10-17',
+    'Statement' => {
       'Effect' => 'Allow',
       'Action' => '*',
       'Resource' => '*'

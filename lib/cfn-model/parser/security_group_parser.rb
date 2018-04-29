@@ -4,7 +4,6 @@ require 'cfn-model/model/security_group_ingress'
 require 'cfn-model/model/references'
 
 class SecurityGroupParser
-
   def parse(cfn_model:, resource:)
      security_group = resource
 

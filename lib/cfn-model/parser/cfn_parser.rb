@@ -156,7 +156,7 @@ class CfnParser
 
   def class_from_type_name(type_name)
     begin
-      resource_class = Object.const_get type_name, inherit=false
+      resource_class = Object.const_get type_name, inherit = false
     rescue NameError
       # puts "Never seen class: #{type_name} so going dynamic"
       resource_class = generate_resource_class_from_type type_name

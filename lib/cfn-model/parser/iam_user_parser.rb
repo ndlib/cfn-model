@@ -55,5 +55,4 @@ class IamUserParser
   #     @dangler
   #   end
   # end
-
 end

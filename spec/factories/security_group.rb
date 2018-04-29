@@ -43,7 +43,7 @@ def security_group_with_one_ingress_rule_ipprotocol(cfn_model: CfnModel.new,
   expected_security_group.ingresses << ingress_rule
   expected_security_group.securityGroupIngress << {
     'CidrIp' => '10.1.2.3/32',
-      'IpProtocol' => '-1'
+    'IpProtocol' => '-1'
   }
 
   yield expected_security_group, ingress_rule if block_given?
@@ -198,7 +198,7 @@ def security_group_with_one_egress_rule_ipprotocol(cfn_model: CfnModel.new,
   expected_security_group.egresses << egress_rule
   expected_security_group.securityGroupEgress << {
     'CidrIp' => '10.1.2.3/32',
-      'IpProtocol' => '-1'
+    'IpProtocol' => '-1'
   }
 
   yield expected_security_group, egress_rule if block_given?

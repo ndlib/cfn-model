@@ -6,7 +6,6 @@ class AnotherResource < ModelElement
 end
 
 class SomeResource < ModelElement
-
 end
 
 describe ModelElement do
