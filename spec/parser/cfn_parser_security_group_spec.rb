@@ -17,7 +17,7 @@ describe CfnParser do
             expect(parse_error.errors.size).to eq(1)
             expect(parse_error.errors[0].to_s).to eq("[/Resources/sgNoDescription/Properties] key 'GroupDescription:' is required.")
           rescue RSpec::Expectations::ExpectationNotMetError
-            $!.message << "in file: #{test_template}"
+            $ERROR_INFO.message << "in file: #{test_template}"
             raise
           end
         end
@@ -36,7 +36,7 @@ describe CfnParser do
             expect(parse_error.errors.size).to eq(1)
             expect(parse_error.errors[0].to_s).to eq("[/Resources/sgNoVpcId/Properties] key 'VpcId:' is required.")
           rescue RSpec::Expectations::ExpectationNotMetError
-            $!.message << "in file: #{test_template}"
+            $ERROR_INFO.message << "in file: #{test_template}"
             raise
           end
         end
