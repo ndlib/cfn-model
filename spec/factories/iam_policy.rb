@@ -23,7 +23,7 @@ def valid_iam_policy(cfn_model: CfnModel.new)
     }
   }
   role.policy_document = policy_document
-  role.groups = %w(fredGroup)
+  role.groups = %w[fredGroup]
   role
 end
 

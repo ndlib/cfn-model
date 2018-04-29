@@ -14,7 +14,7 @@ describe CfnParser do
 
         actual_permissions = cfn_model.resources_by_type('AWS::Lambda::Permission')
         actual_computed_permission = actual_permissions.find do |permission|
-          permission.principal == { 'Fn::Join' => ['-', %w(jim bob)] }
+          permission.principal == { 'Fn::Join' => ['-', %w[jim bob]] }
         end
 
         expect(actual_computed_permission).to_not be_nil

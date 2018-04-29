@@ -24,7 +24,7 @@ Resources:
 END
 
       unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino))
+      expect(unresolved_references).to eq Set.new(%w[dino])
     end
   end
 
@@ -49,7 +49,7 @@ Resources:
 END
 
       unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino))
+      expect(unresolved_references).to eq Set.new(%w[dino])
     end
   end
 
@@ -116,7 +116,7 @@ Resources:
 END
 
       unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino2))
+      expect(unresolved_references).to eq Set.new(%w[dino2])
     end
   end
 
@@ -145,7 +145,7 @@ Resources:
 END
 
       unresolved_references = ReferenceValidator.new.unresolved_references YAML.load(cfn_yaml_with_missing_ref)
-      expect(unresolved_references).to eq Set.new(%w(dino2))
+      expect(unresolved_references).to eq Set.new(%w[dino2])
     end
   end
 end
