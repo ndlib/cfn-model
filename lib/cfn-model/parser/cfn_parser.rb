@@ -16,9 +16,9 @@ end
 #
 class CfnParser
   # this will convert any !Ref or !GetAtt into tranditional hash like in json
-  YAML.add_domain_type('', 'Ref') { |type, val| { 'Ref' => val } }
+  YAML.add_domain_type('', 'Ref') { |_type, val| { 'Ref' => val } }
 
-  YAML.add_domain_type('', 'GetAtt') do |type, val|
+  YAML.add_domain_type('', 'GetAtt') do |_type, val|
     if val.is_a? String
       val = val.split('.')
     end
@@ -27,7 +27,7 @@ class CfnParser
   end
 
   %w[Join Base64 Sub Split Select ImportValue GetAZs FindInMap And Or If Not].each do |function_name|
-    YAML.add_domain_type('', function_name) { |type, val| { "Fn::#{function_name}" => val } }
+    YAML.add_domain_type('', function_name) { |_type, val| { "Fn::#{function_name}" => val } }
   end
 
   ##

@@ -40,7 +40,7 @@ class SchemaGenerator
       '=' => { 'type' => 'any' }
     }
 
-    cloudformation_hash['Parameters'].each do |parameter_key, parameter|
+    cloudformation_hash['Parameters'].each do |parameter_key, _parameter|
       parameters_schema[parameter_key] = {
         'type' => 'map',
         'mapping' => {

@@ -105,11 +105,11 @@ def network_load_balancer(cfn_model: CfnModel.new)
   expected_load_balancer.type = 'network'
   expected_load_balancer.subnetMappings = [
     {
-      'AllocationId' => { 'Fn::GetAtt' => ['FirstEIP','AllocationId'] },
+      'AllocationId' => { 'Fn::GetAtt' => %w[FirstEIP AllocationId] },
       'SubnetId' => { 'Ref'=>'SubnetId1' }
     },
     {
-      'AllocationId' => { 'Fn::GetAtt' => ['SecondEIP','AllocationId'] },
+      'AllocationId' => { 'Fn::GetAtt' => %w[SecondEIP AllocationId] },
       'SubnetId' => { 'Ref'=>'SubnetId2' }
     }
   ]

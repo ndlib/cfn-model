@@ -30,7 +30,7 @@ describe Principal, :prin do
     context '{"AWS":["1234", "fred"]}' do
       it 'returns false' do
         aws_wildcard_principal = {
-          'AWS' => ['1234', 'fred']
+          'AWS' => %w[1234 fred]
         }
         expect(Principal.wildcard?(aws_wildcard_principal)).to eq false
       end

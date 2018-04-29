@@ -4,8 +4,8 @@ require 'cfn-model/parser/parser_error'
 
 describe ReferenceValidator, :refv do
   before(:each) do
-    YAML.add_domain_type('', 'GetAtt') { |type, val| { 'Fn::GetAtt' => val } }
-    YAML.add_domain_type('', 'Ref') { |type, val| { 'Ref' => val } }
+    YAML.add_domain_type('', 'GetAtt') { |_type, val| { 'Fn::GetAtt' => val } }
+    YAML.add_domain_type('', 'Ref') { |_type, val| { 'Ref' => val } }
     @reference_validator = ReferenceValidator.new
   end
 
