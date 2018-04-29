@@ -21,14 +21,12 @@ describe CfnParser do
 
     context 'a template with missing Resources' do
       it 'returns a parse error' do
-
         expect do
           @cfn_parser.parse <<END
 ---
 Parameters: {}
 END
         end.to raise_error 'Illegal cfn - no Resources'
-
       end
     end
 
@@ -60,7 +58,6 @@ END
 
     context 'a template with missing Resources' do
       it 'returns a parse error' do
-
         expect do
           @cfn_parser.parse <<END
 {
@@ -68,7 +65,6 @@ END
 }
 END
         end.to raise_error 'Illegal cfn - no Resources'
-
       end
     end
 
@@ -120,7 +116,6 @@ END
 
   context 'template with external parameter values' do
     it 'returns model with parameter values resolved' do
-
       parameters_json = <<END
 {
   "Parameters": {

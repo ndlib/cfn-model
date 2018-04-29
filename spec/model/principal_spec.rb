@@ -15,7 +15,6 @@ describe Principal, :prin do
           'AWS' => '*'
         }
         expect(Principal.wildcard?(aws_wildcard_principal)).to eq true
-
       end
     end
 
@@ -25,7 +24,6 @@ describe Principal, :prin do
           'AWS' => ['*', 'fred']
         }
         expect(Principal.wildcard?(aws_wildcard_principal)).to eq true
-
       end
     end
 

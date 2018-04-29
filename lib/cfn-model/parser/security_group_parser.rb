@@ -60,7 +60,6 @@ class SecurityGroupParser
           egress_object.send("#{initialLower(k)}=", v)
           mapped_at_least_one_attribute = true
         end
-
       end.reject { |ingress| ingress.nil? }
       #egress_object.valid?
       egress_object

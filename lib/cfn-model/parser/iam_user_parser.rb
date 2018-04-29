@@ -19,7 +19,6 @@ class IamUserParser
 
     user_to_group_additions = cfn_model.resources_by_type 'AWS::IAM::UserToGroupAddition'
     user_to_group_additions.each do |user_to_group_addition|
-
       if user_to_group_addition_has_username(user_to_group_addition.users,iam_user)
         iam_user.group_names << user_to_group_addition.groupName
 
