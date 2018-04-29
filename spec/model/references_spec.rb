@@ -55,7 +55,7 @@ describe References do
     context 'a GetAtt function referring to [someResourceId2,GroupId]' do
       it 'returns someResourceId2' do
         get_att_function = {
-          'Fn::GetAtt' => %w[someResourceId2 GroupId]
+          'Fn::GetAtt' => %w(someResourceId2 GroupId)
         }
         expected_value = 'someResourceId2'
         actual_value = References.resolve_security_group_id get_att_function
@@ -66,7 +66,7 @@ describe References do
     context 'a GetAtt function referring to [someResourceId2,someAtt]' do
       it 'returns nil' do
         get_att_function = {
-          'Fn::GetAtt' => %w[someResourceId2 someAtt]
+          'Fn::GetAtt' => %w(someResourceId2 someAtt)
         }
         expected_value = nil
         actual_value = References.resolve_security_group_id get_att_function
@@ -109,8 +109,8 @@ describe References do
 
     context 'array or random crud' do
       it 'returns array' do
-        actual_value = References.resolve_value(_, %w[0.0.0.0/0])
-        expected_value = %w[0.0.0.0/0]
+        actual_value = References.resolve_value(_, %w(0.0.0.0/0))
+        expected_value = %w(0.0.0.0/0)
 
         expect(actual_value).to eq expected_value
       end
@@ -145,7 +145,7 @@ describe References do
       it 'returns hash as-is' do
         cfn_model = CfnModel.new
         ref_hash = {
-          'Ref' => { 'something_weird': 'verboten' }
+          'Ref' => {'something_weird':'verboten'}
         }
         actual_value = References.resolve_value(cfn_model, ref_hash)
         expected_value = ref_hash

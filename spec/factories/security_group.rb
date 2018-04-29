@@ -42,8 +42,8 @@ def security_group_with_one_ingress_rule_ipprotocol(cfn_model: CfnModel.new,
   expected_security_group.logical_resource_id = security_group_id
   expected_security_group.ingresses << ingress_rule
   expected_security_group.securityGroupIngress << {
-    'CidrIp' => '10.1.2.3/32',
-    'IpProtocol' => '-1'
+      'CidrIp' => '10.1.2.3/32',
+      'IpProtocol' => '-1'
   }
 
   yield expected_security_group, ingress_rule if block_given?
@@ -68,6 +68,7 @@ def security_group_with_no_rules(cfn_model: CfnModel.new, id: 'sg')
   yield expected_security_group if block_given?
   expected_security_group
 end
+
 
 def security_group_with_two_ingress_rules(cfn_model: CfnModel.new, id: 'sg2')
   ingress_rule = AWS::EC2::SecurityGroupIngress.new cfn_model
@@ -197,8 +198,8 @@ def security_group_with_one_egress_rule_ipprotocol(cfn_model: CfnModel.new,
   expected_security_group.logical_resource_id = security_group_id
   expected_security_group.egresses << egress_rule
   expected_security_group.securityGroupEgress << {
-    'CidrIp' => '10.1.2.3/32',
-    'IpProtocol' => '-1'
+      'CidrIp' => '10.1.2.3/32',
+      'IpProtocol' => '-1'
   }
 
   yield expected_security_group, egress_rule if block_given?

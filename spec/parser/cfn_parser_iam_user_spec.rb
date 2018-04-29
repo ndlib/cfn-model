@@ -75,4 +75,5 @@ describe CfnParser do
       end
     end
   end
+
 end

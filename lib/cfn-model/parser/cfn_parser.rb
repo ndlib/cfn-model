@@ -16,26 +16,27 @@ end
 #
 class CfnParser
   # this will convert any !Ref or !GetAtt into tranditional hash like in json
-  YAML.add_domain_type('', 'Ref') { |_type, val| { 'Ref' => val } }
+  YAML.add_domain_type('', 'Ref') { |type, val| { 'Ref' => val } }
 
-  YAML.add_domain_type('', 'GetAtt') do |_type, val|
-    val = val.split('.') if val.is_a? String
+  YAML.add_domain_type('', 'GetAtt') do |type, val|
+    if val.is_a? String
+      val = val.split('.')
+    end
 
     { 'Fn::GetAtt' => val }
   end
 
-  %w[Join Base64 Sub Split Select
-     ImportValue GetAZs FindInMap And Or If Not].each do |function_name|
-    YAML.add_domain_type('', function_name) { |_type, val| { "Fn::#{function_name}" => val } }
+  %w(Join Base64 Sub Split Select ImportValue GetAZs FindInMap And Or If Not).each do |function_name|
+    YAML.add_domain_type('', function_name) { |type, val| { "Fn::#{function_name}" => val } }
   end
 
   ##
   # Given raw json/yml CloudFormation template, returns a CfnModel object
   # or raise ParserErrors if something is amiss with the format
-  def parse(cloudformation_yml, parameter_values_json = nil)
+  def parse(cloudformation_yml, parameter_values_json=nil)
     pre_validate_model cloudformation_yml
 
-    cfn_hash = YAML.safe_load cloudformation_yml
+    cfn_hash = YAML.load cloudformation_yml
 
     # Transform raw resources in template as performed by
     # transforms
@@ -65,9 +66,9 @@ class CfnParser
     unless parameter_values_json.nil?
       parameter_values = JSON.load parameter_values_json
       return unless parameter_values.is_a? Hash
-      return unless parameter_values.key? 'Parameters'
+      return unless parameter_values.has_key? 'Parameters'
       parameter_values['Parameters'].each do |parameter_name, parameter_value|
-        if cfn_model.parameters.key?(parameter_name)
+        if cfn_model.parameters.has_key?(parameter_name)
           cfn_model.parameters[parameter_name].synthesized_value = parameter_value.to_s
         end
       end
@@ -114,7 +115,7 @@ class CfnParser
   end
 
   def transform_hash_into_parameters(cfn_hash, cfn_model)
-    return cfn_model unless cfn_hash.key?('Parameters')
+    return cfn_model unless cfn_hash.has_key?('Parameters')
 
     cfn_hash['Parameters'].each do |parameter_name, parameter_hash|
       parameter = Parameter.new
@@ -122,7 +123,7 @@ class CfnParser
       parameter.type = parameter_hash['Type']
 
       parameter_hash.each do |property_name, property_value|
-        next if %w[Type].include? property_name
+        next if %w(Type).include? property_name
         parameter.send("#{map_property_name_to_attribute(property_name)}=", property_value)
       end
 
@@ -141,7 +142,7 @@ class CfnParser
   def validate_references(cfn_hash)
     unresolved_refs = ReferenceValidator.new.unresolved_references(cfn_hash)
     unless unresolved_refs.empty?
-      raise ParserError, "Unresolved logical resource ids: #{unresolved_refs.to_a}"
+      raise ParserError.new("Unresolved logical resource ids: #{unresolved_refs.to_a}")
     end
   end
 
@@ -155,7 +156,7 @@ class CfnParser
 
   def class_from_type_name(type_name)
     begin
-      resource_class = Object.const_get type_name, inherit = false
+      resource_class = Object.const_get type_name, inherit=false
     rescue NameError
       # puts "Never seen class: #{type_name} so going dynamic"
       resource_class = generate_resource_class_from_type type_name
@@ -164,7 +165,7 @@ class CfnParser
   end
 
   def map_property_name_to_attribute(str)
-    (str.slice(0).downcase + str[1..(str.length)]).tr '-', '_'
+    (str.slice(0).downcase + str[1..(str.length)]).gsub /-/, '_'
   end
 
   def generate_resource_class_from_type(type_name)

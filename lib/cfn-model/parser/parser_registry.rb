@@ -24,7 +24,9 @@ class ParserRegistry
   end
 
   def self.instance
-    @instance = ParserRegistry.new if @instance.nil?
+    if @instance.nil?
+      @instance = ParserRegistry.new
+    end
     @instance
   end
 

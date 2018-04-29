@@ -35,24 +35,24 @@ describe CfnParser do
       yaml_test_templates('iam_group/iam_group_with_if').each do |test_template|
         cfn_model = @cfn_parser.parse IO.read(test_template)
 
-        expect(cfn_model.resources_by_type('AWS::IAM::Group').first.policies.first).to eq(
-          'Fn::If' => [
-            'OtherPolicy',
-            {
-              'PolicyDocument' => {
-                'Statement' => {
-                  'Effect' => 'Allow',
-                  'Action' => '*',
-                  'Resource' => '*'
-                }
-              },
-              'PolicyName' => 'jimbob'
-            },
-            {
-              'Ref' => 'AWS::NoValue'
-            }
-          ]
-        )
+        expect(cfn_model.resources_by_type('AWS::IAM::Group').first.policies.first).to eq({
+                                                                                       'Fn::If' => [
+                                                                                         'OtherPolicy',
+                                                                                         {
+                                                                                           'PolicyDocument' => {
+                                                                                             'Statement' => {
+                                                                                               'Effect' => 'Allow',
+                                                                                               'Action' => '*',
+                                                                                               'Resource' => '*'
+                                                                                             }
+                                                                                           },
+                                                                                           'PolicyName' => 'jimbob'
+                                                                                         },
+                                                                                         {
+                                                                                           'Ref' => 'AWS::NoValue'
+                                                                                         }
+                                                                                       ]
+                                                                                     })
       end
     end
   end

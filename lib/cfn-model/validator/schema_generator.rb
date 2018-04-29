@@ -10,13 +10,14 @@ require 'yaml'
 # files per resource type
 class SchemaGenerator
   def generate(cloudformation_yml)
+
     # make sure structure of Resources is decent and that every record has a Type at least
     cloudformation_hash = ResourceTypeValidator.validate cloudformation_yml
 
     parameters_schema = generate_schema_for_parameter_keys cloudformation_hash
     resources_schema = generate_schema_for_resource_keys cloudformation_hash
 
-    main_schema = YAML.safe_load IO.read(schema_file('schema.yml.erb'))
+    main_schema = YAML.load IO.read(schema_file('schema.yml.erb'))
     if parameters_schema.empty?
       main_schema['mapping'].delete 'Parameters'
     else
@@ -36,10 +37,10 @@ class SchemaGenerator
     return {} if cloudformation_hash['Parameters'].nil?
 
     parameters_schema = {
-      '=' => { 'type' => 'any' }
+      '=' => { 'type' => 'any'}
     }
 
-    cloudformation_hash['Parameters'].each do |parameter_key, _parameter|
+    cloudformation_hash['Parameters'].each do |parameter_key, parameter|
       parameters_schema[parameter_key] = {
         'type' => 'map',
         'mapping' => {
@@ -57,12 +58,14 @@ class SchemaGenerator
 
   def generate_schema_for_resource_keys(cloudformation_hash)
     resources_schema = {
-      '=' => { 'type' => 'any' }
+      '=' => { 'type' => 'any'}
     }
 
     cloudformation_hash['Resources'].each do |resource_id, resource|
       schema_hash = schema_for_type(resource['Type'])
-      resources_schema[resource_id] = schema_hash unless schema_hash.nil?
+      unless schema_hash.nil?
+        resources_schema[resource_id] = schema_hash
+      end
     end
     resources_schema
   end
@@ -77,7 +80,7 @@ class SchemaGenerator
     if !File.exist? schema_file_path
       nil
     else
-      YAML.safe_load IO.read(schema_file_path)
+      YAML.load IO.read(schema_file_path)
     end
   end
 end

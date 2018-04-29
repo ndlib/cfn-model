@@ -7,22 +7,24 @@ class IamUserParser
     iam_user = resource
 
     iam_user.policy_objects = iam_user.policies.map do |policy|
-      next unless policy.key? 'PolicyName'
+      next unless policy.has_key? 'PolicyName'
 
       new_policy = Policy.new
       new_policy.policy_name = policy['PolicyName']
       new_policy.policy_document = PolicyDocumentParser.new.parse(policy['PolicyDocument'])
       new_policy
-    end.reject(&:nil?)
+    end.reject { |policy| policy.nil? }
 
     iam_user.groups.each { |group_name| iam_user.group_names << group_name }
 
     user_to_group_additions = cfn_model.resources_by_type 'AWS::IAM::UserToGroupAddition'
     user_to_group_additions.each do |user_to_group_addition|
-      next unless user_to_group_addition_has_username(user_to_group_addition.users, iam_user)
-      iam_user.group_names << user_to_group_addition.groupName
 
-      # we need to figure out the story on resolving Refs i think for this to be real
+      if user_to_group_addition_has_username(user_to_group_addition.users,iam_user)
+        iam_user.group_names << user_to_group_addition.groupName
+
+        # we need to figure out the story on resolving Refs i think for this to be real
+      end
     end
   end
 
@@ -30,11 +32,16 @@ class IamUserParser
 
   def user_to_group_addition_has_username(addition_user_names, user_to_find)
     addition_user_names.each do |addition_user_name|
-      return true if addition_user_name == user_to_find.userName
+      if addition_user_name == user_to_find.userName
+        return true
+      end
 
-      next unless addition_user_name.is_a? Hash
-      unless addition_user_name['Ref'].nil?
-        return true if addition_user_name['Ref'] == user_to_find.logical_resource_id
+      if addition_user_name.is_a? Hash
+        if !addition_user_name['Ref'].nil?
+          if addition_user_name['Ref'] == user_to_find.logical_resource_id
+            return true
+          end
+        end
       end
     end
     false
@@ -49,4 +56,5 @@ class IamUserParser
   #     @dangler
   #   end
   # end
+
 end

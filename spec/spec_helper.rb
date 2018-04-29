@@ -14,22 +14,22 @@ require 'json'
 require 'yaml'
 
 def test_templates(name)
-  %W[
+  %W(
     spec/test_templates/json/#{name}.json
     spec/test_templates/yaml/#{name}.yml
-  ]
+  )
 end
 
 def yaml_test_templates(name)
-  %W[
+  %W(
     spec/test_templates/yaml/#{name}.yml
-  ]
+  )
 end
 
 def json_test_templates(name)
-  %W[
+  %W(
     spec/test_templates/json/#{name}.json
-  ]
+  )
 end
 
 def json_test_template(name)

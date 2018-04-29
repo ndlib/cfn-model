@@ -6,7 +6,9 @@ class AnotherResource < ModelElement
 end
 
 class SomeResource < ModelElement
+
 end
+
 
 describe ModelElement do
   context 'an untouched object without any instance variables' do

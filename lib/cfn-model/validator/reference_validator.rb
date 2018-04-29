@@ -2,11 +2,11 @@ require 'set'
 
 class ReferenceValidator
   def unresolved_references(cloudformation_hash)
-    parameter_keys = if cloudformation_hash['Parameters'].nil?
-                       []
-                     else
-                       cloudformation_hash['Parameters'].keys
-                     end
+    if cloudformation_hash['Parameters'].nil?
+      parameter_keys = []
+    else
+      parameter_keys = cloudformation_hash['Parameters'].keys
+    end
 
     resource_keys = cloudformation_hash['Resources'].keys
     missing_refs = all_references(cloudformation_hash) - Set.new(parameter_keys + resource_keys)
@@ -29,17 +29,20 @@ class ReferenceValidator
 
     unless properties_hash.nil?
       properties_hash.values.each do |value|
-        next unless value.is_a? Hash
-        sub_hash = value
+        if value.is_a? Hash
+          sub_hash = value
 
-        if sub_hash.size == 1 && !sub_hash['Ref'].nil?
-          unless sub_hash['Ref'].is_a? String
-            raise ParserError, "Ref target must be string literal: #{sub_hash}"
+          if sub_hash.size == 1 && !sub_hash['Ref'].nil?
+            unless sub_hash['Ref'].is_a? String
+              raise ParserError.new("Ref target must be string literal: #{sub_hash}")
+            end
+
+            unless pseudo_reference?(sub_hash['Ref'])
+              refs << sub_hash['Ref']
+            end
+          else
+            refs |= all_ref(sub_hash)
           end
-
-          refs << sub_hash['Ref'] unless pseudo_reference?(sub_hash['Ref'])
-        else
-          refs |= all_ref(sub_hash)
         end
       end
     end
@@ -51,19 +54,22 @@ class ReferenceValidator
 
     unless properties_hash.nil?
       properties_hash.values.each do |value|
-        next unless value.is_a? Hash
-        sub_hash = value
+        if value.is_a? Hash
+          sub_hash = value
 
-        # ! GetAtt too
-        if sub_hash.size == 1 && !sub_hash['Fn::GetAtt'].nil?
-          if sub_hash['Fn::GetAtt'].is_a? Array
-            refs << sub_hash['Fn::GetAtt'][0]
-          elsif sub_hash['Fn::GetAtt'].is_a? String
-            refs << Regexp.last_match(1) if sub_hash['Fn::GetAtt'] =~ /([^.]*)\.(.*)/
+          # ! GetAtt too
+          if sub_hash.size == 1 && !sub_hash['Fn::GetAtt'].nil?
+            if sub_hash['Fn::GetAtt'].is_a? Array
+              refs << sub_hash['Fn::GetAtt'][0]
+            elsif sub_hash['Fn::GetAtt'].is_a? String
+              if sub_hash['Fn::GetAtt'] =~ /([^.]*)\.(.*)/
+                refs << $1
+              end
 
+            end
+          else
+            refs |= all_get_att(sub_hash)
           end
-        else
-          refs |= all_get_att(sub_hash)
         end
       end
     end

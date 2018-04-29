@@ -19,7 +19,7 @@ describe CfnParser do
             expect(parse_error.errors[0].to_s).to eq("[/Resources/S3BucketPolicy/Properties] key 'PolicyDocument:' is required.")
             expect(parse_error.errors[1].to_s).to eq("[/Resources/S3BucketPolicy/Properties] key 'Bucket:' is required.")
           rescue RSpec::Expectations::ExpectationNotMetError
-            $ERROR_INFO.message << "in file: #{test_template}"
+            $!.message << "in file: #{test_template}"
             raise
           end
         end

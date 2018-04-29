@@ -15,6 +15,7 @@ describe Principal, :prin do
           'AWS' => '*'
         }
         expect(Principal.wildcard?(aws_wildcard_principal)).to eq true
+
       end
     end
 
@@ -24,13 +25,14 @@ describe Principal, :prin do
           'AWS' => ['*', 'fred']
         }
         expect(Principal.wildcard?(aws_wildcard_principal)).to eq true
+
       end
     end
 
     context '{"AWS":["1234", "fred"]}' do
       it 'returns false' do
         aws_wildcard_principal = {
-          'AWS' => %w[1234 fred]
+          'AWS' => ['1234', 'fred']
         }
         expect(Principal.wildcard?(aws_wildcard_principal)).to eq false
       end
@@ -46,7 +48,7 @@ describe Principal, :prin do
       it 'returns true' do
         multiple_principals = {
           'Service' => 'ec2.amazon.com',
-          'AWS' => %w[1234 *]
+          'AWS' => %w(1234 *),
         }
         expect(Principal.wildcard?(multiple_principals)).to eq true
       end
@@ -56,7 +58,7 @@ describe Principal, :prin do
       it 'returns false' do
         multiple_principals = {
           'Service' => 'ec2.amazon.com',
-          'AWS' => %w[1234 6666]
+          'AWS' => %w(1234 6666),
         }
         expect(Principal.wildcard?(multiple_principals)).to eq false
       end
@@ -64,9 +66,9 @@ describe Principal, :prin do
 
     context 'not a String or Hash' do
       it 'raises an error' do
-        expect do
+        expect{
           _ = Principal.wildcard?(['*'])
-        end.to raise_error 'whacky principal not string or hash: ["*"]'
+        }.to raise_error 'whacky principal not string or hash: ["*"]'
       end
     end
   end
